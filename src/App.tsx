@@ -31,7 +31,7 @@ function App() {
       <QuestionCard
         questionNmbr = {number +1} 
         totalQuestion = {total}
-        questions = {questions[number].question}
+        question = {questions[number].question}
         answers = {questions[number].answers}
         userAnswer={ userAnswer ? userAnswer[number]:undefined}
         callback = {checkAnswer}
