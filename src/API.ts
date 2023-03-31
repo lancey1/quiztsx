@@ -3,7 +3,7 @@ import { shuffleAnswers } from "./utils";
 export enum Difficulty {
   EASY = "easy",
   MEDIUM = "medium",
-  HARD = "hard",
+  HARD = "hard"
 }
 
 export type Question = {
@@ -15,14 +15,14 @@ export type Question = {
   type: string;
 };
 
-export type QuestionState = Question & { answers: string[] };
+export type QuestionState = Question & { answerchoices: string[] };
 
 export const fetchQuiz = async (amount: number, difficulty: Difficulty) => {
   const endpoint = `https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}&type=multiple`;
   const data = await (await fetch(endpoint)).json();
   const questioned = data.results.map((question: Question)=>({
     ...question,
-    answers: shuffleAnswers([...question.incorrect_answers,question.correct_answer])
+    answerchoices: shuffleAnswers([...question.incorrect_answers,question.correct_answer])
   }));
   return questioned
 };
