@@ -22,12 +22,31 @@ font-family:'Catamaran', sans-serif;
 `
 
 export const QuestionCardStyle = styled.div`
-background-color:red;
-> button {
-  color:red;
+.number {
+  font-weight:bold;
+  font-size: 1.5em;
+}
+.question{
+  text-decoration:underline;
+  font-size: 1.5em;
+}
+> div > div > button {
+  border:none
+  display:flex;
+  padding: .25rem;
+  width:100%
+}
+
+> div > div > button:hover {
+  background-color:#CCCCCC;
+}
 }
 `
-
+export const Button = styled.button`
+  font-size: 1.5em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`;
 
 
 export const Wrapper = styled.div`
@@ -39,6 +58,10 @@ align-items:center;
 }
 .score {
   color :#fff;
+  font-size: 35px;
+  background-color:#CCCCCC;
+  padding: 1rem;
+
 }
 
 `

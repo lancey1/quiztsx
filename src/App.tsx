@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import QuestionCard from "./components/QuestionCard";
 import { fetchQuiz } from "./API";
 import { QuestionState, Difficulty } from "./API";
-import { GlobalStyle,Wrapper } from "./App.styles";
+import { GlobalStyle,Wrapper, Button } from "./App.styles";
 
 const total = 10;
 
@@ -36,6 +36,11 @@ function App() {
     setStart(true)
   };
 
+
+  const endGame = () => {
+    setGameOver(true)
+  };
+
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver){
       //  get User answer
@@ -56,20 +61,22 @@ function App() {
 
   const nextQuestion = () => {
     const nextQuestion = number + 1;
-    if (nextQuestion===total){
+    if (nextQuestion === total - 1){
       setGameOver(true)
     } else{
       setNumber(nextQuestion)
     }
   };
+
   return (
     <>
     <GlobalStyle/>
     <Wrapper className="App">
+    {/* <Button onClick={endGame}>end</Button> */}
       <h1>Quiz built with TypeScript </h1>
       {gameOver || userAnswer.length === total ? (
-      <button className="start" onClick={startGame}>Start</button>):null}
-      <p className="score">Score:{score}</p>
+      <Button className="start" onClick={startGame}>Start</Button>):null}
+      <p className="score"> Score : {score}</p>
       {loading && <p>Loading Questions...</p>}
       {!loading && !gameOver && !(userAnswer.length === total) &&<QuestionCard
         questionNmbr = {number +1} 
@@ -79,9 +86,9 @@ function App() {
         userAnswer={ userAnswer ? userAnswer[number]:undefined}
         callback = {checkAnswer}
         />}
-        {start && gameOver && <p>Game Over</p>}
+        {gameOver && {score} && userAnswer.length > 0 && <p>Game Over, Play Again</p>}
         {!loading && !gameOver && userAnswer.length === number + 1 && number !== total-1 ?
-      (<button onClick={nextQuestion} className="next"> Next</button>):null}
+      (<Button onClick={nextQuestion} className="next"> Next</Button>):null}
     </Wrapper>
     </>
   );

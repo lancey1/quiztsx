@@ -1,6 +1,6 @@
 import React from "react";
 import { AnswerObject } from "../App";
-import { QuestionCardStyle } from "../App.styles";
+import { QuestionCardStyle,Button } from "../App.styles";
 
 
 type Props = {
@@ -22,11 +22,10 @@ const QuestionCard: React.FC<Props> = ({
 }) => (
 
   <QuestionCardStyle>
-  <div>
     <p className="number">
       Question: {questionNmbr} / {totalQuestion}
     </p>
-    <p dangerouslySetInnerHTML={{ __html: question }} />
+    <p className="question" dangerouslySetInnerHTML={{ __html: question }} />
     <div>
       {answers.map((answer, index) => (
         <div key={index}>
@@ -36,7 +35,6 @@ const QuestionCard: React.FC<Props> = ({
         </div>
       ))}
     </div>
-  </div>
   </QuestionCardStyle>
 );
 
