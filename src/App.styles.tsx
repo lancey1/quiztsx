@@ -21,6 +21,15 @@ font-family:'Catamaran', sans-serif;
 
 `
 
+export const QuestionCardStyle = styled.div`
+background-color:red;
+> button {
+  color:red;
+}
+`
+
+
+
 export const Wrapper = styled.div`
 display:flex;
 flex-direction:column;

@@ -21,6 +21,8 @@ function App() {
   const [userAnswer,setUserAnswer] = useState<AnswerObject[]>([]);
   const [score,setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+  const [start, setStart] = useState(false);
+
 
   const startGame = async () => {
     setLoading(true)
@@ -31,6 +33,7 @@ function App() {
     setUserAnswer([]);
     setNumber(0)
     setLoading(false)
+    setStart(true)
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -76,7 +79,7 @@ function App() {
         userAnswer={ userAnswer ? userAnswer[number]:undefined}
         callback = {checkAnswer}
         />}
-        {gameOver && <p>Game Over</p>}
+        {start && gameOver && <p>Game Over</p>}
         {!loading && !gameOver && userAnswer.length === number + 1 && number !== total-1 ?
       (<button onClick={nextQuestion} className="next"> Next</button>):null}
     </Wrapper>
