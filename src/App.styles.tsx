@@ -34,7 +34,7 @@ export const QuestionCardStyle = styled.div`
   border:none
   display:flex;
   padding: .25rem;
-  width:100%
+  width:100%;
 }
 
 > div > div > button:hover {
@@ -47,6 +47,24 @@ export const Button = styled.button`
   border: 2px solid palevioletred;
   border-radius: 3px;
 `;
+
+type ButtonWrapperProps = {
+  correct:boolean;
+  userClicked:boolean;
+}
+
+export const QuestionButton = styled.div<ButtonWrapperProps>`
+  font-size: 1.5em;
+  border-radius: 3px;
+  background: ${({correct,userClicked}) =>
+  correct 
+    ? 'linear-gradient(90deg, #56ffa4, $59bc86)'
+    : !correct && userClicked
+    ? 'linear-gradient(90deg, #ff5656, $c16868)'
+    : 'linear-gradient(90deg, #56ccff, $6eafb4)'
+}
+`;
+
 
 
 export const Wrapper = styled.div`
