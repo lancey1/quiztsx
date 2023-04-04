@@ -72,13 +72,12 @@ function App() {
     <>
     <GlobalStyle/>
     <Wrapper className="App">
-    {/* <Button onClick={endGame}>end</Button> */}
       <h1>Quiz built with TypeScript </h1>
       <p className="score"> Score : {score}</p>
       {gameOver || userAnswer.length === total ? (
       <Button className="start" onClick={startGame}>Start</Button>):null}
       {loading && <p>Loading Questions...</p>}
-      {!loading && !gameOver && !(userAnswer.length === total) &&<QuestionCard
+      {!loading && !gameOver && !(userAnswer.length === total) && <QuestionCard
         questionNmbr = {number +1} 
         totalQuestion = {total}
         question = {questions[number].question}

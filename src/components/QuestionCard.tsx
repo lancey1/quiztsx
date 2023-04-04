@@ -32,9 +32,10 @@ const QuestionCard: React.FC<Props> = ({
         <QuestionButton 
         key={index}
         correct = {userAnswer?.correctAnswer === answer}
-        userClicked = {userAnswer?.correctAnswer === answer}
+        userClicked = {userAnswer?.answer === answer}
         >
-          <button disabled={userAnswer?true:false} value={answer} onClick={callback}>
+          <button
+          disabled={userAnswer?true:false} value={answer} onClick={callback}>
             {answer}
           </button>
         </QuestionButton>

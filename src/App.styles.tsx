@@ -38,7 +38,7 @@ export const QuestionCardStyle = styled.div`
 }
 
 > div > div > button:hover {
-  background-color:#CCCCCC;
+opacity: .8;
 }
 }
 `
@@ -54,15 +54,17 @@ type ButtonWrapperProps = {
 }
 
 export const QuestionButton = styled.div<ButtonWrapperProps>`
-  font-size: 1.5em;
+  font-size: 2.5em;
   border-radius: 3px;
-  background: ${({correct,userClicked}) =>
-  correct 
-    ? 'linear-gradient(90deg, #56ffa4, $59bc86)'
-    : !correct && userClicked
-    ? 'linear-gradient(90deg, #ff5656, $c16868)'
-    : 'linear-gradient(90deg, #56ccff, $6eafb4)'
-}
+  button {
+  background-color: ${({correct,userClicked}) => {
+    if (correct) {
+    return 'green'}
+    else if (!correct && userClicked){
+    return 'red'}
+    else{
+    return}}
+  }
 `;
 
 
