@@ -6,6 +6,7 @@ import { GlobalStyle,Wrapper, Button } from "./App.styles";
 
 const total = 10;
 
+// Define the Answer Object keys and accepted values
 export type AnswerObject ={
   question : string;
   answer:string;
@@ -24,6 +25,7 @@ function App() {
   const [start, setStart] = useState(false);
 
 
+  // Start Game resets and fetches the questions to be used for the quiz
   const startGame = async () => {
     setLoading(true)
     setGameOver(false)

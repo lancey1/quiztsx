@@ -3,6 +3,8 @@ import { AnswerObject } from "../App";
 import { QuestionCardStyle,QuestionButton } from "../App.styles";
 
 
+// Define the Props Object, and properties being passed down to component
+
 type Props = {
   question: string;
   answers: string[];
@@ -12,7 +14,7 @@ type Props = {
   totalQuestion: number;
 };
 
-
+//  React typescript functional component with props being passed
 const QuestionCard: React.FC<Props> = ({
   question,
   answers,
