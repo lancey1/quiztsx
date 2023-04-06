@@ -1,96 +1,135 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import QuestionCard from "./components/QuestionCard";
 import { fetchQuiz } from "./API";
 import { QuestionState, Difficulty } from "./API";
-import { GlobalStyle,Wrapper, Button } from "./App.styles";
+import { GlobalStyle, Wrapper, Button } from "./App.styles";
 
 const total = 10;
 
 // Define the Answer Object keys and accepted values
-export type AnswerObject ={
-  question : string;
-  answer:string;
+export type AnswerObject = {
+  question: string;
+  answer: string;
   correct: boolean;
-  correctAnswer:string
-}
-
+  correctAnswer: string;
+};
 
 function App() {
-  const [loading,setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
-  const [number,setNumber]= useState(0);
-  const [userAnswer,setUserAnswer] = useState<AnswerObject[]>([]);
-  const [score,setScore] = useState(0);
+  const [number, setNumber] = useState(0);
+  const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
+  const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
   const [start, setStart] = useState(false);
-
+  const [userDifficulty, setUserDifficulty] = useState("easy");
+  const [numberOfQuestions, setNumberofQuestions] = useState<number>(10);
 
   // Start Game resets and fetches the questions to be used for the quiz
   const startGame = async () => {
-    setLoading(true)
-    setGameOver(false)
-    const fetchedQuestions = await fetchQuiz(total,Difficulty.EASY)
-    setQuestions(fetchedQuestions)
+    setLoading(true);
+    setGameOver(false);
+    const fetchedQuestions = await fetchQuiz(numberOfQuestions, userDifficulty);
+    console.log(fetchedQuestions);
+    setQuestions(fetchedQuestions);
     setScore(0);
     setUserAnswer([]);
-    setNumber(0)
-    setLoading(false)
-    setStart(true)
+    setNumber(0);
+    setLoading(false);
+    setStart(true);
   };
 
-
   const endGame = () => {
-    setGameOver(true)
+    setGameOver(true);
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!gameOver){
+    if (!gameOver) {
       //  get User answer
       const answer = e.currentTarget.value;
       const correct = questions[number].correct_answer === answer;
       // Add score if answer is correct
-      if (correct){ setScore(prev=> prev+1)}
+      if (correct) {
+        setScore((prev) => prev + 1);
+      }
 
-      const  answerObject = {
+      const answerObject = {
         question: questions[number].question,
         answer,
         correct,
-        correctAnswer: questions[number].correct_answer
-      }
-      setUserAnswer(prev=>[...prev,answerObject])
+        correctAnswer: questions[number].correct_answer,
+      };
+      setUserAnswer((prev) => [...prev, answerObject]);
     }
   };
 
   const nextQuestion = () => {
     const nextQuestion = number + 1;
-    if (nextQuestion === total - 1){
-      setGameOver(true)
-    } else{
-      setNumber(nextQuestion)
+    if (nextQuestion === numberOfQuestions) {
+      setGameOver(true);
+    } else {
+      setNumber(nextQuestion);
     }
   };
 
   return (
     <>
-    <GlobalStyle/>
-    <Wrapper className="App">
-      <h1>Quiz built with TypeScript </h1>
-      <p className="score"> Score : {score}</p>
-      {gameOver || userAnswer.length === total ? (
-      <Button className="start" onClick={startGame}>Start</Button>):null}
-      {loading && <p>Loading Questions...</p>}
-      {!loading && !gameOver && !(userAnswer.length === total) && <QuestionCard
-        questionNmbr = {number +1} 
-        totalQuestion = {total}
-        question = {questions[number].question}
-        answers = {questions[number].answerchoices}
-        userAnswer={ userAnswer ? userAnswer[number]:undefined}
-        callback = {checkAnswer}
-        />}
-        {gameOver && {score} && userAnswer.length > 0 && <p>Game Over, Play Again</p>}
-        {!loading && !gameOver && userAnswer.length === number + 1 && number !== total-1 ?
-      (<Button onClick={nextQuestion} className="next"> Next</Button>):null}
-    </Wrapper>
+      <GlobalStyle />
+      <Wrapper className="App">
+        <h1>Quiz built with TypeScript </h1>
+        {!gameOver && <p className="score"> Score : {score}</p>}
+        {gameOver && (
+          <div>
+            <p>Difficulty</p>
+            <button onClick={() => setUserDifficulty("easy")}>Easy</button>
+            <button onClick={() => setUserDifficulty("medium")}>Medium</button>
+            <button onClick={() => setUserDifficulty("hard")}>Hard</button>
+          </div>
+        )}
+        {gameOver && (
+          <div>
+            <p>Number of Questions</p>
+            <input
+              onChange={(e) => {
+                setNumberofQuestions(Number(e.target.value));
+              }}
+              type="number"
+              max={50}
+              min={10}
+              defaultValue={10}
+            ></input>
+          </div>
+        )}
+        {gameOver || userAnswer.length === numberOfQuestions ? (
+          <Button className="start" onClick={startGame}>
+            Start
+          </Button>
+        ) : null}
+        {loading && <p>Loading Questions...</p>}
+        {!loading &&
+          !gameOver &&
+          !(userAnswer.length === numberOfQuestions) && (
+            <QuestionCard
+              questionNmbr={number + 1}
+              totalQuestion={numberOfQuestions}
+              question={questions[number].question}
+              answers={questions[number].answerchoices}
+              userAnswer={userAnswer ? userAnswer[number] : undefined}
+              callback={checkAnswer}
+            />
+          )}
+        {gameOver && { score } && userAnswer.length > 0 && (
+          <p>Game Over, Play Again</p>
+        )}
+        {!loading &&
+        !gameOver &&
+        userAnswer.length === number + 1 &&
+        number !== numberOfQuestions - 1 ? (
+          <Button onClick={nextQuestion} className="next">
+            Next
+          </Button>
+        ) : null}
+      </Wrapper>
     </>
   );
 }
