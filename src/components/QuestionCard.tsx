@@ -1,14 +1,13 @@
 import React from "react";
 import { AnswerObject } from "../App";
-import { QuestionCardStyle,QuestionButton } from "../App.styles";
-
+import { QuestionCardStyle, QuestionButton } from "../App.styles";
 
 // Define the Props Object, and properties being passed down to component
 
 type Props = {
   question: string;
   answers: string[];
-  callback: (e: React.MouseEvent<HTMLButtonElement>) =>void;
+  callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
   userAnswer: AnswerObject | undefined;
   questionNmbr: number;
   totalQuestion: number;
@@ -23,7 +22,6 @@ const QuestionCard: React.FC<Props> = ({
   questionNmbr,
   totalQuestion,
 }) => (
-
   <QuestionCardStyle>
     <p className="number">
       Question: {questionNmbr} / {totalQuestion}
@@ -31,13 +29,16 @@ const QuestionCard: React.FC<Props> = ({
     <p className="question" dangerouslySetInnerHTML={{ __html: question }} />
     <div>
       {answers.map((answer, index) => (
-        <QuestionButton 
-        key={index}
-        correct = {userAnswer?.correctAnswer === answer}
-        userClicked = {userAnswer?.answer === answer}
+        <QuestionButton
+          key={index}
+          correct={userAnswer?.correctAnswer === answer}
+          userClicked={userAnswer?.answer === answer}
         >
           <button
-          disabled={userAnswer?true:false} value={answer} onClick={callback}>
+            disabled={userAnswer ? true : false}
+            value={answer}
+            onClick={callback}
+          >
             {answer}
           </button>
         </QuestionButton>

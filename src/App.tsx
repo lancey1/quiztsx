@@ -39,10 +39,6 @@ function App() {
     setStart(true);
   };
 
-  const endGame = () => {
-    setGameOver(true);
-  };
-
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       //  get User answer
@@ -108,7 +104,7 @@ function App() {
         {loading && <p>Loading Questions...</p>}
         {!loading &&
           !gameOver &&
-          !(userAnswer.length === numberOfQuestions) && (
+          !(userAnswer.length === numberOfQuestions + 1) && (
             <QuestionCard
               questionNmbr={number + 1}
               totalQuestion={numberOfQuestions}
@@ -124,7 +120,7 @@ function App() {
         {!loading &&
         !gameOver &&
         userAnswer.length === number + 1 &&
-        number !== numberOfQuestions - 1 ? (
+        number !== numberOfQuestions + 1 ? (
           <Button onClick={nextQuestion} className="next">
             Next
           </Button>
