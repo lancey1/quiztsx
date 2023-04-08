@@ -3,6 +3,7 @@ import QuestionCard from "./components/QuestionCard";
 import { fetchQuiz } from "./API";
 import { QuestionState, Difficulty } from "./API";
 import { GlobalStyle, Wrapper, Button } from "./App.styles";
+import { error } from "console";
 
 const total = 10;
 
@@ -68,6 +69,15 @@ function App() {
     }
   };
 
+  const handleNumberofQuestion = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(event.target.value)
+    if (number > 0 && number <= 50){
+      setNumberofQuestions(number);
+    } else {
+      setNumberofQuestions(10)
+    }
+  }
+
   return (
     <>
       <GlobalStyle />
@@ -86,9 +96,7 @@ function App() {
           <div>
             <p>Number of Questions</p>
             <input
-              onChange={(e) => {
-                setNumberofQuestions(Number(e.target.value));
-              }}
+              onChange={ handleNumberofQuestion}
               type="number"
               max={50}
               min={10}
