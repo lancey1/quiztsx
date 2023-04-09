@@ -68,7 +68,7 @@ function App() {
       setNumber(nextQuestion);
     }
   };
-
+// handles number of question input
   const handleNumberofQuestion = (event: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(event.target.value)
     if (number > 0 && number <= 50){
