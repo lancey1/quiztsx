@@ -15,6 +15,10 @@ export type AnswerObject = {
   correctAnswer: string;
 };
 
+interface ButtonState {
+  [key: string]: boolean;
+}
+
 function App() {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
@@ -25,6 +29,12 @@ function App() {
   const [start, setStart] = useState(false);
   const [userDifficulty, setUserDifficulty] = useState("easy");
   const [numberOfQuestions, setNumberofQuestions] = useState<number>(10);
+  const [buttonState, setButtonState] = useState<ButtonState>({
+    button1: false,
+    button2: false,
+    button3: false
+  });
+  
 
   // Start Game resets and fetches the questions to be used for the quiz
   const startGame = async () => {
@@ -68,14 +78,29 @@ function App() {
       setNumber(nextQuestion);
     }
   };
-// handles number of question input
-  const handleNumberofQuestion = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const number = Number(event.target.value)
-    if (number > 0 && number <= 50){
+  // handles number of question input
+  const handleNumberofQuestion = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const number = Number(event.target.value);
+    if (number > 0 && number <= 50) {
       setNumberofQuestions(number);
     } else {
-      setNumberofQuestions(10)
+      setNumberofQuestions(10);
     }
+  };
+
+  function handleClick(button: keyof ButtonState) {
+    setButtonState((prevState) => {
+      const newState = { ...prevState };
+      for (const key in newState) {
+        if (key !== button) {
+          newState[key] = false;
+        }
+      }
+      newState[button] = true;
+      return newState;
+    });
   }
 
   return (
@@ -86,17 +111,37 @@ function App() {
         {!gameOver && <p className="score"> Score : {score}</p>}
         {gameOver && (
           <div>
-            <p>Difficulty</p>
-            <button onClick={() => setUserDifficulty("easy")}>Easy</button>
-            <button onClick={() => setUserDifficulty("medium")}>Medium</button>
-            <button onClick={() => setUserDifficulty("hard")}>Hard</button>
+            <div>
+              <p>Difficulty</p>
+            </div>
+
+            <div className={"difficultydiv"}>
+              <button
+                className={`difficultyBtn ${buttonState.button1 ? 'active' : ''}`}
+                onClick={() => handleClick('button1')}
+                >
+                Easy
+              </button>
+              <button
+                className={`difficultyBtn ${buttonState.button2 ? 'active' : ''}`}
+                onClick={()=>handleClick('button2')}
+              >
+                Medium
+              </button>
+              <button
+                className={`difficultyBtn ${buttonState.button3 ? 'active' : ''}`}
+                onClick={()=>handleClick('button3')}
+              >
+                Hard
+              </button>
+            </div>
           </div>
         )}
         {gameOver && (
           <div>
             <p>Number of Questions</p>
             <input
-              onChange={ handleNumberofQuestion}
+              onChange={handleNumberofQuestion}
               type="number"
               max={50}
               min={10}

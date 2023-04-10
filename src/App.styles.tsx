@@ -84,4 +84,22 @@ align-items:center;
 
 }
 
+.difficultydiv{
+  display:flex;
+  flex-direction:row;
+  gap: 20px;
+}
+.difficultyBtn{
+  background-color:blue;
+  height 35px;
+  color: white;
+  border-radius: 3px;
+  gap: 20px;
+
+}
+
+.active {
+  background-color: #333 !important;
+  color: #fff !important;
+}
 `
